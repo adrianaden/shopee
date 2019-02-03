@@ -9,7 +9,6 @@ public class ProductSummaryBuilder {
     private String category;
     private Double taxAmount;
     private Boolean isRefundable;
-    private Double amount;
 
     public ProductSummaryBuilder name(String name) {
         this.name = name;
