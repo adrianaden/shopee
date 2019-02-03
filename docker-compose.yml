@@ -1,0 +1,42 @@
+version: '3'
+services:
+
+  shopee-db:
+    image: adrianaden/shopee-db:latest
+    container_name: adrianaden-shopee-db
+    ports:
+      - "2345:5432"
+    networks:
+      - private
+    tty: true
+  
+  shopee-web:
+    image: adrianaden/shopee-web:latest
+    container_name: adrianaden-shopee-web
+    ports:
+      - "8080:80"
+    networks:
+      - private
+    environment:
+      - CONTAINER_ENV=docker
+    tty: true
+
+  shopee-api:
+    image: adrianaden/shopee-api:latest
+    container_name: adrianaden-shopee-api
+    depends_on:
+      - shopee-db
+    ports:
+      - "8081:8081"
+    networks:
+      - private
+    environment:
+      - CONTAINER_ENV=docker
+    tty: true
+
+networks:
+  bridge:
+    external:
+      name: bridge
+  private:
+    external: false

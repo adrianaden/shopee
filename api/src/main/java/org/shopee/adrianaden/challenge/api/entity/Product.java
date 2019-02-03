@@ -20,7 +20,7 @@ public class Product {
     private String name;
 
     @NotNull
-    @Column(name = "productCategoryCode")
+    @Column(name = "product_category_code")
     private Integer productCategoryCode;
 
     @NotNull
