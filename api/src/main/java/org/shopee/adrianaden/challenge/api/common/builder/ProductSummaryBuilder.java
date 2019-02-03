@@ -42,11 +42,6 @@ public class ProductSummaryBuilder {
     }
 
 
-    public ProductSummaryBuilder amount(Double amount) {
-        this.amount = amount;
-        return this;
-    }
-
     public ProductSummary build() {
         ProductSummary productSummary = new ProductSummary();
         productSummary.setName(name);

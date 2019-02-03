@@ -5,7 +5,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.shopee.adrianaden.challenge.api.dto.BillSummary;
 import org.shopee.adrianaden.challenge.api.entity.Product;
+import org.shopee.adrianaden.challenge.api.service.BillService;
 import org.shopee.adrianaden.challenge.api.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -20,37 +22,31 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(ProductController.class)
-public class ProductControllerTestCase {
+@WebMvcTest(BillController.class)
+public class BillControllerTestCase {
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private ProductService productService;
+    private BillService billService;
 
-    private Product productMock;
 
     @Before
     public void preDefine(){
-        productMock = new Product();
-        productMock.setId(1L);
-        productMock.setName("Big Mac");
-        productMock.setProductCategoryCode(1);
-        productMock.setPrice(1000L);
+
     }
 
     @Test
-    public void createSuccess() throws Exception {
-        Mockito.when(productService
-                .create(Mockito.any(Product.class)))
-                .thenReturn(productMock);
+    public void findAllSuccess() throws Exception {
+        Mockito.when(billService
+                .findAll())
+                .thenReturn(new BillSummary());
 
         MockHttpServletRequestBuilder requestBuilders = MockMvcRequestBuilders
-                .post("/api" + "/product")
-                .servletPath("/product")
+                .get("/api" + "/bill")
+                .servletPath("/bill")
                 .contextPath("/api")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{ \"name\": \"Big Mac\", \"productCategoryCode\": 1, \"price\": 1000 }");
+                .contentType(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(requestBuilders)
                 .andDo(MockMvcResultHandlers.print())
