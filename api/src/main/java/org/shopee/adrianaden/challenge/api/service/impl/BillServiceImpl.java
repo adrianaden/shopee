@@ -32,7 +32,7 @@ public class BillServiceImpl implements BillService {
                     .categoryCode(product.getProductCategoryCode())
                     .price(product.getPrice())
                     .category(productCategory.getName())
-                    .taxAmount(productCategory.getTaxAmount())
+                    .taxAmount(productCategory.calculateTax(product.getPrice()))
                     .isRefundable(productCategory.isRefundable())
                     .build();
             productSummaries.add(productSummary);

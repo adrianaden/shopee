@@ -137,13 +137,14 @@
         var billRows = "";
         bill.productSummaries.forEach(productSummary => {
             billRows += `
-                <tr>
+                <tr class="row-bill">
                     <td>${productSummary.name}</td>
                     <td>${productSummary.categoryCode}</td>
                     <td>${productSummary.category}</td>
                     <td>${productSummary.isRefundable}</td>
                     <td>${productSummary.price}</td>
                     <td>${productSummary.taxAmount}</td>
+                    <td>${productSummary.amount}</td>
                 </tr>
                 `
         });
@@ -151,10 +152,12 @@
     }
 
     function fillBill(bill, billHtml) {
+      
         $('#price-subtotal').val(bill.priceSubTotal)
         $('#tax-subtotal').val(bill.taxSubTotal)
         $('#grand-subtotal').val(bill.grandSubTotal)
-        $('#table-bill tbody').append(billHtml)
+        $(".row-bill").remove();
+        $('#table-bill tr:last').after(billHtml)
     }
 </script>
 
