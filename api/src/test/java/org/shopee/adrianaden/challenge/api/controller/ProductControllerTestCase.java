@@ -35,7 +35,7 @@ public class ProductControllerTestCase {
         productMock = new Product();
         productMock.setId(1L);
         productMock.setName("Big Mac");
-        productMock.setTaxCode(1);
+        productMock.setProductTypeCode(1);
         productMock.setPrice(1000L);
     }
 
@@ -50,7 +50,7 @@ public class ProductControllerTestCase {
                 .servletPath("/product")
                 .contextPath("/api")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{ \"name\": \"Big Mac\", \"taxCode\": 1, \"price\": 1000 }");
+                .content("{ \"name\": \"Big Mac\", \"productTypeCode\": 1, \"price\": 1000 }");
 
         mockMvc.perform(requestBuilders)
                 .andDo(MockMvcResultHandlers.print())

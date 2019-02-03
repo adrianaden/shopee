@@ -30,7 +30,7 @@ public class ProductServiceTestCase {
         productMock = new Product();
         productMock.setId(1L);
         productMock.setName("Big Mac");
-        productMock.setTaxCode(1);
+        productMock.setProductTypeCode(1);
         productMock.setPrice(1000L);
     }
 
@@ -39,7 +39,7 @@ public class ProductServiceTestCase {
         Product product = new Product();
         product.setId(1L);
         product.setName("Big Mac");
-        product.setTaxCode(1);
+        product.setProductTypeCode(1);
         product.setPrice(1000L);
 
         Mockito.when(productRepository.save(Mockito.any(Product.class))).thenReturn(productMock);
@@ -47,7 +47,7 @@ public class ProductServiceTestCase {
 
         Assert.assertEquals(productMock.getId(), actual.getId());
         Assert.assertEquals(productMock.getName(), actual.getName());
-        Assert.assertEquals(productMock.getTaxCode(), actual.getTaxCode());
+        Assert.assertEquals(productMock.getProductTypeCode(), actual.getProductTypeCode());
         Assert.assertEquals(productMock.getPrice(), actual.getPrice());
     }
 

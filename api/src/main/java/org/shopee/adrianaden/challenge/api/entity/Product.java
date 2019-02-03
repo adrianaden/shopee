@@ -20,8 +20,8 @@ public class Product {
     private String name;
 
     @NotNull
-    @Column(name = "tax_code")
-    private Integer taxCode;
+    @Column(name = "productCategoryCode")
+    private Integer productCategoryCode;
 
     @NotNull
     @Column(name = "price")

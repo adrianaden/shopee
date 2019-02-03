@@ -19,7 +19,7 @@
         <tr>
             <td>Tax Code</td>
             <td>
-                <input type="number" name="taxCode" id="taxCode">
+                <input type="number" name="productCategoryCode" id="productCategoryCode">
             </td> 
         </tr>
         <tr>
@@ -41,12 +41,12 @@
             var method = $('#form-product').attr('method');
 
             var name = $('#name').val();
-            var taxCode = $('#taxCode').val();
+            var productCategoryCode = $('#productCategoryCode').val();
             var price = $('#price').val();
 
             var payload = {
                 name : name,
-                taxCode : taxCode,
+                productCategoryCode : productCategoryCode,
                 price : price
             }
 
