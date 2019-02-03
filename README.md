@@ -13,6 +13,11 @@ $ sh install.sh
 $ docker-compose up
 ```
 
+# Running Applicaton
+```bash
+web : localhost:8080
+api : localhost:8081/api
+```
 ## API Documentation
 http://localhost:8081/api/swagger-ui.html
 (make sure application already start)
