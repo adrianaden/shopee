@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Shopee Challenge</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+</head>
+
+<body>
+    
+    <form name="form-product" id="form-product" action="http://localhost:8081/api/product", method="POST">
+    <table>
+        <tr>
+            <td>Name</td>
+            <td>
+                <input type="text" name="name" id="name">
+            </td> 
+        </tr>
+        <tr>
+            <td>Tax Code</td>
+            <td>
+                <input type="number" name="taxCode" id="taxCode">
+            </td> 
+        </tr>
+        <tr>
+            <td>Price</td>
+            <td>
+                <input type=" number" name="price" id="price">
+            </td> 
+        </tr>
+    </table>
+    <input type="submit" value="Submit">
+    </form>
+</body>
+
+<script type="text/javascript">
+     $(document).ready(function () {
+        $('#form-product').submit(function (e) {
+            e.preventDefault();
+            var action = $('#form-product').attr('action');
+            var method = $('#form-product').attr('method');
+
+            var name = $('#name').val();
+            var taxCode = $('#taxCode').val();
+            var price = $('#price').val();
+
+            var payload = {
+                name : name,
+                taxCode : taxCode,
+                price : price
+            }
+
+            $.ajax({
+                type: method,
+                dataType : "json",
+                contentType: "application/json; charset=utf-8",
+                url: action,
+                data: JSON.stringify(payload),
+                beforeSend: function(){
+                },
+                complete: function(){
+                },
+                success: function (data) {
+                    console.log(data)
+                }
+            });
+        });
+     });
+</script>
+</html>
