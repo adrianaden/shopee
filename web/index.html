@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>Shopee Challenge</title>
@@ -7,64 +8,154 @@
 </head>
 
 <body>
-    
-    <form name="form-product" id="form-product" action="http://localhost:8081/api/product", method="POST">
+
+    <form name="form-product" id="form-product" action="http://localhost:8081/api/product" , method="POST">
+        <table>
+            <tr>
+                <td>Name</td>
+                <td>
+                    <input type="text" name="name" id="name">
+                </td>
+            </tr>
+            <tr>
+                <td>Tax Code</td>
+                <td>
+                    <input type="number" name="productCategoryCode" id="productCategoryCode">
+                </td>
+            </tr>
+            <tr>
+                <td>Price</td>
+                <td>
+                    <input type=" number" name="price" id="price">
+                </td>
+            </tr>
+        </table>
+        <input type="submit" value="Submit">
+
+    </form>
+    <br />
+    <br />
+    <br />
+
+
+    My Bill <br />
+    <input type="button" value="refresh" onclick="requestGetBill()">
+    <table id="table-bill" border="1">
+        <tbody>
+            <tr>
+                <th> name </th>
+                <th> Tax Code </th>
+                <th> Type </th>
+                <th> Refundable </th>
+                <th> Price </th>
+                <th> Tax </th>
+                <th> Amount </th>
+            </tr>
+        </tbody>
+    </table>
+
     <table>
         <tr>
-            <td>Name</td>
+            <td>Price Subtotal</td>
             <td>
-                <input type="text" name="name" id="name">
-            </td> 
+                <input type="number" name="price-subtotal" id="price-subtotal" disabled>
+            </td>
         </tr>
         <tr>
-            <td>Tax Code</td>
+            <td>Tax Subtotal</td>
             <td>
-                <input type="number" name="productCategoryCode" id="productCategoryCode">
-            </td> 
+                <input type="number" name="tax-subtotal" id="tax-subtotal" disabled>
+            </td>
         </tr>
         <tr>
-            <td>Price</td>
+            <td>Grand Total</td>
             <td>
-                <input type=" number" name="price" id="price">
-            </td> 
+                <input type=" number" name="grand-subtotal" id="grand-subtotal" disabled>
+            </td>
         </tr>
     </table>
-    <input type="submit" value="Submit">
-    </form>
 </body>
 
 <script type="text/javascript">
-     $(document).ready(function () {
+    $(document).ready(function () {
+
         $('#form-product').submit(function (e) {
             e.preventDefault();
-            var action = $('#form-product').attr('action');
-            var method = $('#form-product').attr('method');
-
-            var name = $('#name').val();
-            var productCategoryCode = $('#productCategoryCode').val();
-            var price = $('#price').val();
-
-            var payload = {
-                name : name,
-                productCategoryCode : productCategoryCode,
-                price : price
-            }
-
-            $.ajax({
-                type: method,
-                dataType : "json",
-                contentType: "application/json; charset=utf-8",
-                url: action,
-                data: JSON.stringify(payload),
-                beforeSend: function(){
-                },
-                complete: function(){
-                },
-                success: function (data) {
-                    console.log(data)
-                }
-            });
+            requestPostProduct()
         });
-     });
+    });
+
+    function requestPostProduct() {
+        var action = $('#form-product').attr('action');
+        var method = $('#form-product').attr('method');
+
+        var name = $('#name').val();
+        var productCategoryCode = $('#productCategoryCode').val();
+        var price = $('#price').val();
+
+        var payload = {
+            name: name,
+            productCategoryCode: productCategoryCode,
+            price: price
+        }
+
+        $.ajax({
+            type: method,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            url: action,
+            data: JSON.stringify(payload),
+            beforeSend: function () {
+            },
+            complete: function () {
+                requestGetBill();
+            },
+            success: function (data) {
+                console.log(data)
+            }
+        });
+    }
+
+    function requestGetBill() {
+        var action = "http://localhost:8081/api/bill";
+        var method = "GET";
+
+        $.ajax({
+            type: method,
+            url: action,
+            beforeSend: function () {
+            },
+            complete: function () {
+            },
+            success: function (data) {
+                parseBill(data)
+            }
+        });
+    }
+
+    function parseBill(bill) {
+        var billRows = "";
+        bill.productSummaries.forEach(productSummary => {
+            billRows += `
+                <tr>
+                    <td>${productSummary.name}</td>
+                    <td>${productSummary.categoryCode}</td>
+                    <td>${productSummary.category}</td>
+                    <td>${productSummary.isRefundable}</td>
+                    <td>${productSummary.price}</td>
+                    <td>${productSummary.taxAmount}</td>
+                </tr>
+                `
+        });
+        fillBill(bill, billRows);
+    }
+
+    function fillBill(bill, billHtml) {
+        $('#price-subtotal').val(bill.priceSubTotal)
+        $('#tax-subtotal').val(bill.taxSubTotal)
+        $('#grand-subtotal').val(bill.grandSubTotal)
+        $('#table-bill tbody').append(billHtml)
+    }
 </script>
+
 </html>
