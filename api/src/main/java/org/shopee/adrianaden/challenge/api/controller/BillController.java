@@ -1,6 +1,7 @@
 package org.shopee.adrianaden.challenge.api.controller;
 
 
+import org.shopee.adrianaden.challenge.api.dto.BillSummary;
 import org.shopee.adrianaden.challenge.api.service.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class BillController {
     private BillService billService;
 
     @GetMapping
-    ResponseEntity findAll() {
+    ResponseEntity<BillSummary> findAll() {
         return ResponseEntity.ok(billService.findAll());
     }
 }

@@ -16,7 +16,7 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity create(@RequestBody @Validated Product product) {
+    ResponseEntity<Product> create(@RequestBody @Validated Product product) {
         return ResponseEntity.ok(productService.create(product));
     }
 }
